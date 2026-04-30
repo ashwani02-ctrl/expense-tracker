@@ -17,6 +17,8 @@ export async function POST(req: Request) {
     );
   }
 
+  
+
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
