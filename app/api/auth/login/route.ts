@@ -28,7 +28,10 @@ export async function POST(req: Request) {
     );
   }
 
-  const token = signJwt({ userId: user.id });
+  const token = signJwt({ 
+    userId: user.id,
+    email: user.email
+  });
 
   const res = NextResponse.json({ success: true });
 

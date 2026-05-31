@@ -36,14 +36,14 @@ function SideNav() {
 
     const path = usePathname();
     useEffect(() => {
-        console.log(path)
-    }, [])
+       
+    }, [path])
 
 
     return (
         <div >
-            <div className="h-screen shadow-sm">
-                <Image src={'./logo.svg'}
+            <div className="h-screen shadow-sm mt-1">
+                <Image src='/logo.svg'
                     alt='logo'
                     width={100}
                     height={100}

@@ -1,19 +1,20 @@
-import React from "react";
+
 import SideNav from "./_components/sidenav";
 import DashboardHeader from "./_components/DashboardHeader";
 
-function DashboardLayout({children}){
+export default async function DashboardLayout({ children }) {
+    
     return (
         <div>
             <div className="fixed md:w-64 hidden md:block  ">
-                <SideNav/>
+                <SideNav />
             </div>
             <div className="md:ml-64 ">
-                <DashboardHeader/>
+                <DashboardHeader />
                 {children}
             </div>
         </div>
     )
 }
 
-export default DashboardLayout
+
