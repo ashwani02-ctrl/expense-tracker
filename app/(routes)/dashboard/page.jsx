@@ -14,7 +14,7 @@ export default async function Dashboard() {
     }
 
     const payload = verifyJwt(token);
-    console.log(payload);
+    
 
 
     const checkUserBudget = await db
@@ -22,8 +22,7 @@ export default async function Dashboard() {
         .from(budgets)
         .where(eq(budgets.createdBy, payload.email));
 
-    console.log("Payload:", payload);
-    console.log("Budgets:", checkUserBudget);
+   
 
     if (checkUserBudget.length === 0) {
 

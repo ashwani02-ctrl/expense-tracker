@@ -16,7 +16,9 @@ export default function LoginPage(){
         });
 
         if(!res.ok){
-            alert("Login Failed");
+            const error = await res.text();
+            console.log(error);
+            alert(error);
             return;
         }
 

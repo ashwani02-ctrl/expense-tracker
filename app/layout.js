@@ -1,5 +1,6 @@
 import { Outfit,Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
 const outfit = Outfit({
   variable: "--font-Outfit",
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${outfit.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Toaster/>
         {children}
       </body>
     </html>

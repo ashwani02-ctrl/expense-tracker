@@ -9,10 +9,10 @@ export async function POST(req: Request) {
   const user = await db.query.users.findFirst({
     where: (users, { eq }) => eq(users.email, email),
   });
-
+  console.log(user);
   if (!user) {
     return NextResponse.json(
-      { error: "Invalid credentials" },
+      { error: "Invalid credential 1" },
       { status: 401 }
     );
   }
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
   if (!isMatch) {
     return NextResponse.json(
-      { error: "Invalid credentials" },
+      { error: "Invalid credential 2" },
       { status: 401 }
     );
   }
