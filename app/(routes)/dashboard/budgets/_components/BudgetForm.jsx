@@ -18,6 +18,7 @@ import { budgets } from "@/db/schema"
 import { Name } from "drizzle-orm"
 import { createBudget } from "@/app/actions/budget"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 export default function BudgetForm() {
 
     const [emojiIcon, setEmojiIcon] = useState('😊');
@@ -26,7 +27,9 @@ export default function BudgetForm() {
     const [name, setName]=useState();
     const [amount, setAmount]=useState();
 
-     const [openDialog, setOpenDialog] = useState(false)
+     const [openDialog, setOpenDialog] = useState(false);
+
+     const router = useRouter();
 
     const onCreateBudget=async()=>{
         if(!name || !amount) return;
@@ -44,6 +47,7 @@ export default function BudgetForm() {
                 setName("");
                 setAmount("");
                 setOpenDialog(false);
+                router.refresh();
                 toast("Budget Created Successfully!!")
 
             }else{

@@ -1,48 +1,40 @@
-import { eq, getTableColumns, sql } from "drizzle-orm"
+"use client"
+
+import { budgetCard } from "@/app/actions/budgetcard";
 import BudgetForm from "./BudgetForm"
-import { budgets, expenses } from "@/db/schema"
-import { verifyJwt } from "@/lib/jwt";
-import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
-import { db } from "@/db";
 import BudgetItem from "./budgetItem";
+import { useEffect, useState } from "react";
 
 
-export default async function BudgetList() {
-    const token = (await cookies()).get("token")?.value;
-        if (!token) {
-            redirect("/login");
+export default function BudgetList() {
+    const [budgetData, setbudgetData] = useState([]);
+    useEffect(()=>{
+        async function loadBudget() {
+            const res = await budgetCard();
+            if(res.success){
+                setbudgetData(res.data);
+            }
+            
         }
-        
-    
-        const payload = verifyJwt(token);
-        console.log(payload);
-    
+        loadBudget();
+    },[]);
 
-        const getBudgetList=await db.select({
-            ...getTableColumns(budgets),
-            totalSpend:sql `sum(${expenses.amount})`.mapWith(Number),
-            totalItem:sql `count(${expenses.id})`.mapWith(Number),
-        }).from(budgets)
-        .leftJoin(expenses, eq(budgets.id, expenses.budgetId))
-        .where(eq(budgets.createdBy, payload.email))
-        .groupBy(budgets.id);
 
-  
-    console.log("tada!!!!=>",getBudgetList);
 
-    
     return (
         <div className="mt-7">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <BudgetForm />
-                {getBudgetList && getBudgetList.map((budget)=>(
-                    
+                <BudgetForm
+                />
+                {budgetData.map((budget) => (
+
                     <BudgetItem
-                    key={budget.id}
-                    budget={budget}/>
-                ))}
-                
+                        key={budget.id}
+                        budget={budget} />
+                ))
+
+                }
+
             </div>
         </div>
     )
