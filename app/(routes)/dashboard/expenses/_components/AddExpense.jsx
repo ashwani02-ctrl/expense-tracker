@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { createExpense } from "@/app/actions/createExpense";
 import { toast } from "sonner";
 
-export default function AddExpense({budgetId, refereshData}) {
+export default function AddExpense({budgetId, refreshData}) {
     const [name, setName]=useState();
     const [amount, setAmount]=useState();
 
@@ -24,7 +24,7 @@ export default function AddExpense({budgetId, refereshData}) {
             if(res.success){
                 setName("");
                 setAmount("");
-                refereshData();
+                refreshData();
                 toast("New Expense Created Successfully!!")
             }else{
                 alert(`Error:${res.error}`)

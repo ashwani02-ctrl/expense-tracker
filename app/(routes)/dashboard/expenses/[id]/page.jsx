@@ -9,7 +9,7 @@ import { getexpensesList } from "@/app/actions/expenselayout";
 export default function Id() {
   const params = useParams();
   const [expenseData, setexpenseData] = useState();
-  const [expenseList, setexpenseList] = useState([]);
+  const [expenseList, setexpenseList] = useState();
 
   async function loadExpense() {
 
@@ -29,7 +29,6 @@ export default function Id() {
 
   }
   useEffect(() => {
-    console.log(params);
     loadExpense();
   }, [params]);
 

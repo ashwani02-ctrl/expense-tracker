@@ -1,7 +1,7 @@
 "use server"
 import { db } from "@/db";
 import { expenses } from "@/db/schema";
-import { desc, eq } from "drizzle-orm";
+import {  eq } from "drizzle-orm";
 
 export async function deleteExpense(expenseId) {
     try{

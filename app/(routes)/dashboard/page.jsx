@@ -1,34 +1,40 @@
-import React from "react";
-import { budgets } from "@/db/schema";
-import { db } from "@/db";
-import { verifyJwt } from "@/lib/jwt";
-import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
-import { eq } from "drizzle-orm";
+"use client"
+import React, { useEffect, useState } from "react";
+import Cardinfo from "./_components/Cardinfo";
+import { budgetCard } from "@/app/actions/budgetcard"
+import { checkuserbudget } from "@/app/actions/checkuserbudget";
 
-export default async function Dashboard() {
-
-    const token = (await cookies()).get("token")?.value;
-    if (!token) {
-        redirect("/login");
+export default function Dashboard() {
+    const [budgetData, setbudgetData] = useState([]);
+    const [email, setEmail] = useState();
+    const checking = async()=>{
+        const { email } = await checkuserbudget();
+        setEmail(email);
     }
-
-    const payload = verifyJwt(token);
-    
-
-
-    const checkUserBudget = await db
-        .select()
-        .from(budgets)
-        .where(eq(budgets.createdBy, payload.email));
-
-   
-
-    if (checkUserBudget.length === 0) {
-
-        redirect("/dashboard/budgets")
-    }
+        useEffect(()=>{
+            checking();
+            async function loadBudget() {
+                const res = await budgetCard();
+                if(res.success){
+                    setbudgetData(res.data);
+                }
+                
+            }
+            loadBudget();
+        },[]);
     return (
-        <div>dashboard</div>
+        <div className="m-4">
+            <h2 className="font-bold text-3xl">Hi, {email}</h2>
+            <p className="text-1xl text-gray-500">Here's what happening with you money, lets manage it</p>
+            <Cardinfo budgetData={budgetData}/>
+            <div className="grid grid-cols-1 md:grid-cols-3 mt-6">
+                <div className="md:col-span-2">
+                    chart
+                </div>
+                <div>
+                    other content
+                </div>
+            </div>
+        </div>
     )
 }
