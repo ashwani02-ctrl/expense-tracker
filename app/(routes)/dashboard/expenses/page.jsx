@@ -1,4 +1,4 @@
-
+"use client"
 import BudgetItem from "../budgets/_components/budgetItem";
 import AddExpense from "./_components/AddExpense";
 import ExpenseListTable from "./_components/expenseListTable";
