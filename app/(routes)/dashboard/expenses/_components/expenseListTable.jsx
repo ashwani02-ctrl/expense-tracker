@@ -18,7 +18,7 @@ export default function ExpenseListTable({ expenseList, refreshData}) {
                 <h2 className="font-bold">Date</h2>
                 <h2 className="font-bold">Action</h2>
             </div>
-            {expenseList.map((expenses, index) => (
+            {expenseList?.map((expenses, index) => (
                 <div key={expenses.id} className="grid grid-cols-4 bg-slate-200 p-2">
                     <h2>{expenses.name}</h2>
                     <h2>{expenses.amount}$</h2>

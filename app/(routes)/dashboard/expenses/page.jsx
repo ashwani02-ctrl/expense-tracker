@@ -18,7 +18,7 @@ export default function Expense({ expenseData,loadExpense,expenseList }) {
             <div className="mt-5">
                 <h2 className="font-bold text-lg">Latest Expenses</h2>
                 <ExpenseListTable
-                expenseList={expenseList}
+                expenseList={expenseList || []}
                 refreshData={()=>loadExpense()}/>
             </div>
 
