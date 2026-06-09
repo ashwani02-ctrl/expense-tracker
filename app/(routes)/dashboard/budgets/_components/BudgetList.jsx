@@ -8,14 +8,15 @@ import { useEffect, useState } from "react";
 
 export default function BudgetList() {
     const [budgetData, setbudgetData] = useState([]);
-    useEffect(()=>{
-        async function loadBudget() {
-            const res = await budgetCard();
-            if(res.success){
-                setbudgetData(res.data);
-            }
+    async function loadBudget() {
+        const res = await budgetCard();
+        if(res.success){
+            setbudgetData(res.data);
             
         }
+        
+    }
+    useEffect(()=>{
         loadBudget();
     },[]);
 
@@ -25,6 +26,7 @@ export default function BudgetList() {
         <div className="mt-7">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <BudgetForm
+                refreshData={loadBudget}
                 />
                 {budgetData.map((budget) => (
 

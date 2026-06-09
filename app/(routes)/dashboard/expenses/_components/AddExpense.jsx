@@ -4,32 +4,36 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { createExpense } from "@/app/actions/createExpense";
 import { toast } from "sonner";
+import { Loader } from "lucide-react";
 
-export default function AddExpense({budgetId, refreshData}) {
-    const [name, setName]=useState();
-    const [amount, setAmount]=useState();
+export default function AddExpense({ budgetId, refreshData }) {
+    const [name, setName] = useState("");
+    const [amount, setAmount] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const addNewExpense = async()=>{
-        if(!name || !amount) return;
-        
+    const addNewExpense = async () => {
+        setLoading(true);
+        if (!name || !amount) return;
 
-        try{
-            const res=await createExpense({
+
+        try {
+            const res = await createExpense({
                 name: name,
                 amount: amount,
                 budgetId: budgetId,
             })
-            
 
-            if(res.success){
+
+            if (res.success) {
                 setName("");
                 setAmount("");
                 refreshData();
                 toast("New Expense Created Successfully!!")
-            }else{
+            } else {
                 alert(`Error:${res.error}`)
             }
-        }catch(error){
+             setLoading(false);
+        } catch (error) {
             console.error(error);
         }
     }
@@ -41,6 +45,7 @@ export default function AddExpense({budgetId, refreshData}) {
             <div className="mt-2">
                 <h2 className="text-black font-medium mb-1">Expense Name</h2>
                 <Input
+                    value={name}
                     placeholder="e.g. Home Decor"
                     onChange={(e) => setName(e.target.value)}
                 />
@@ -48,12 +53,16 @@ export default function AddExpense({budgetId, refreshData}) {
             <div className="mt-2">
                 <h2 className="text-black font-medium mb-1">Expense Amount</h2>
                 <Input
+                    value={amount}
                     placeholder="e.g. 1000"
                     onChange={(e) => setAmount(e.target.value)}
                 />
             </div>
-            <Button disabled={!(name&&amount)} className="mt-3 w-full"
-            onClick={()=>addNewExpense()}>Add New Expense</Button>
+            <Button disabled={!(name && amount)|| loading} className="mt-3 w-full"
+                onClick={() => addNewExpense()}>
+                    {loading? 
+                    <Loader className="animate-spin"/> : "Add New Expense" }
+                    </Button>
         </div>
     )
 }

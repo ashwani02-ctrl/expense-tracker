@@ -4,6 +4,7 @@ import { jwtVerify } from "jose";
 import { db } from "@/db";
 import { budgets, expenses } from "@/db/schema";
 import {and, desc, eq, getTableColumns, sql } from "drizzle-orm";
+import { getallexpense } from "./getallexpense";
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 export async function expenseURL(budgetId: number) {
@@ -36,6 +37,8 @@ export async function expenseURL(budgetId: number) {
                         .groupBy(budgets.id)
                         .orderBy(desc(budgets.id))                
                         return {success: true, data: result[0]};
+                        
+
     }catch(error: any){
         console.error("Auth/Database Error:", error)
         return {success: false, error: error.message || "something went wrong"}

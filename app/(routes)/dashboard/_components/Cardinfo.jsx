@@ -54,7 +54,7 @@ export default function Cardinfo({ budgetData }) {
                   {  [1,2,3].map((item,index)=>(
                     <div 
                     key={index}
-                    className="h-[110px] w-full bg-slate-200 animate-pulse rounded-lg"></div>
+                    className="h-27.5 w-full bg-slate-200 animate-pulse rounded-lg"></div>
                     )) }
 
                 </div>

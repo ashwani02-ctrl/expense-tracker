@@ -1,18 +1,19 @@
 import { Trash } from "lucide-react"
 import { toast } from "sonner";
 import { deleteExpense } from "@/app/actions/deleteExpense"
-export default function ExpenseListTable({ expenseList, refreshData}) {
+export default function ExpenseListTable({ expenseList, refreshData }) {
     console.log(expenseList)
-    async function deleteexpense(id){
+    async function deleteexpense(id) {
         const res = await deleteExpense(Number(id));
-        if(res.success){
+        if (res.success) {
             toast("Expense Deleted");
             refreshData();
         }
     }
     return (
         <div className="mt-3">
-            <div className="grid grid-cols-4 bg-slate-200 p-2">
+            <h2 className="font-bold text-lg">Latest Expenses</h2>
+            <div className="grid grid-cols-4 bg-slate-600 p-2 mt-3">
                 <h2 className="font-bold">Name</h2>
                 <h2 className="font-bold">Amount</h2>
                 <h2 className="font-bold">Date</h2>
@@ -25,7 +26,7 @@ export default function ExpenseListTable({ expenseList, refreshData}) {
                     <h2>{expenses.createdAt}</h2>
                     <h2>
                         <Trash className="text-red-600 cursor-pointer"
-                        onClick={()=>deleteexpense(expenses.id)}/>
+                            onClick={() => deleteexpense(expenses.id)} />
                     </h2>
                 </div>
             ))}
